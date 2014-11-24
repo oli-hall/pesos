@@ -322,7 +322,7 @@ class SchedulerProcess(ProtobufProcess):
       field.value = offer_id
 
       for task in tasks:
-        if offer_id in self.saved_offers:
+        if offer_id.value in self.saved_offers:
           if len(self.saved_offers[offer_id.value][task.slave_id.value]) > 0:
             self.saved_slaves[task.slave_id.value] = \
                 self.saved_offers[offer_id.value][task.slave_id.value]
