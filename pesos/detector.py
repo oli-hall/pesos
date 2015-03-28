@@ -55,7 +55,7 @@ class MasterDetector(object):
         return detector_cls.from_uri(uri)
       except cls.InvalidUri:
         continue
-    raise cls.CannotDetector('No compatible master detectors found for %r' % uri)
+    raise cls.CannotDetect('No compatible master detectors found for %r' % uri)
 
   @classmethod
   def register(cls, detector_cls):
@@ -144,7 +144,7 @@ if HAS_ZK:
     def from_uri(cls, uri):
       url = urlparse(uri)
       if url.scheme.lower() != 'zk':
-        raise self.InvalidUrl('ZookeeperMasterDetector got invalid ensemble URI %s' % uri)
+        raise cls.InvalidUri('ZookeeperMasterDetector got invalid ensemble URI %s' % uri)
       return cls(url.netloc, url.path)
 
     def __init__(self, ensemble, path):
