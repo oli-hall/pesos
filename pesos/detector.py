@@ -55,7 +55,7 @@ class MasterDetector(object):
         return detector_cls.from_uri(uri)
       except cls.InvalidUri:
         continue
-    raise cls.CannotDetector('No compatible master detectors found for %r' % uri)
+    raise cls.CannotDetect('No compatible master detectors found for %r' % uri)
 
   @classmethod
   def register(cls, detector_cls):
@@ -118,9 +118,13 @@ class StandaloneMasterDetector(FutureMasterDetector):
   @classmethod
   def from_uri(cls, uri):
     try:
-      leader_pid = PID.from_string(uri)
+      if uri.startswith("master"):
+        leader_pid = PID.from_string(uri)
+      else:
+        host, port = uri.split(":")
+        leader_pid = PID(host, int(port), "master")
     except ValueError:
-      raise cls.InvalidUri('Not a PID: %r' % uri)
+      raise cls.InvalidUri('Not a valid master URI: %r' % uri)
     return cls(leader=leader_pid)
 
   def __init__(self, leader=None):
@@ -144,7 +148,7 @@ if HAS_ZK:
     def from_uri(cls, uri):
       url = urlparse(uri)
       if url.scheme.lower() != 'zk':
-        raise self.InvalidUrl('ZookeeperMasterDetector got invalid ensemble URI %s' % uri)
+        raise cls.InvalidUri('ZookeeperMasterDetector got invalid ensemble URI %s' % uri)
       return cls(url.netloc, url.path)
 
     def __init__(self, ensemble, path):

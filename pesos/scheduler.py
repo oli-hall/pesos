@@ -289,7 +289,6 @@ class SchedulerProcess(ProtobufProcess):
     self.send(self.pid, update)
 
   def launch_tasks(self, offer_ids, tasks, filters=None):
-    now = self.clock.time()
 
     if not self.connected.is_set():
       for task in tasks:
@@ -319,7 +318,7 @@ class SchedulerProcess(ProtobufProcess):
 
     for offer_id in offer_ids:
       field = message.offer_ids.add()
-      field.value = offer_id
+      field.value = offer_id.value
 
       for task in tasks:
         if offer_id.value in self.saved_offers:
@@ -407,7 +406,7 @@ class PesosSchedulerDriver(SchedulerDriver):
       self.detector = MasterDetector.from_uri(self.master_uri)
     except MasterDetector.Error as e:
       self.status = mesos_pb2.DRIVER_ABORTED
-      self.scheduler.error('Failed to construct master detector: %s' % e)
+      log.error('Failed to construct master detector: %s' % e)
       return
 
     assert self.scheduler_process is None
