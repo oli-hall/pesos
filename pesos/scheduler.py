@@ -385,6 +385,12 @@ class PesosSchedulerDriver(SchedulerDriver):
     self.detector = None
     self.credential = credential
 
+    # Fill out any missing FrameworkInfo values
+    if not self.framework.hostname:
+      self.framework.hostname = socket.getfqdn()
+    if not self.framework.user:
+      self.framework.user = getuser()
+
   def locked(method):
     @functools.wraps(method)
     def _wrapper(self, *args, **kw):
