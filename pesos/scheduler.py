@@ -318,7 +318,7 @@ class SchedulerProcess(ProtobufProcess):
 
     for offer_id in offer_ids:
       field = message.offer_ids.add()
-      field.value = offer_id
+      field.value = offer_id.value
 
     self.send(self.master, message)
 
