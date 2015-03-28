@@ -118,9 +118,13 @@ class StandaloneMasterDetector(FutureMasterDetector):
   @classmethod
   def from_uri(cls, uri):
     try:
-      leader_pid = PID.from_string(uri)
+      if uri.startswith("master"):
+        leader_pid = PID.from_string(uri)
+      else:
+        host, port = uri.split(":")
+        leader_pid = PID(host, int(port), "master")
     except ValueError:
-      raise cls.InvalidUri('Not a PID: %r' % uri)
+      raise cls.InvalidUri('Not a valid master URI: %r' % uri)
     return cls(leader=leader_pid)
 
   def __init__(self, leader=None):
