@@ -55,7 +55,7 @@ class MasterDetector(object):
         return detector_cls.from_uri(uri)
       except cls.InvalidUri:
         continue
-    raise cls.CannotDetector('No compatible master detectors found for %r' % uri)
+    raise cls.CannotDetect('No compatible master detectors found for %r' % uri)
 
   @classmethod
   def register(cls, detector_cls):
