@@ -17,7 +17,7 @@ apt-get -y install \
 # Set the hostname to the IP address.  This simplifies things for components
 # that want to advertise the hostname to the user, or other components.
 hostname 192.168.33.2
-MESOS_VERSION=0.21.1
+MESOS_VERSION=0.23.1
 
 # Ensure java 7 is the default java.
 update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java

@@ -15,7 +15,7 @@ setup(
   install_requires=[
     'compactor[pb]==0.3.0',
     'futures==2.1.6',
-    'mesos.interface==0.21.1',
+    'mesos.interface==0.23.1',
   ],
   extras_require={
     'zk': ['twitter.common.zookeeper==0.3.3'],
